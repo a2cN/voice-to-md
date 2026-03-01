@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body { font-family: -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f8f9fa; }
+      .card { padding: 30px; background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 80%; max-width: 300px; }
+      h2 { font-size: 1.2rem; color: #333; margin-bottom: 20px; }
+      .btn { background: #1a73e8; color: white; border: none; padding: 15px 30px; border-radius: 30px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; transition: transform 0.1s; outline: none; }
+      .btn:active { transform: scale(0.95); background: #174ea6; }
+      #status { margin-top: 20px; font-size: 0.9rem; color: #666; min-height: 1.2em; }
+      .spinner { display: none; margin: 10px auto; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #1a73e8; border-radius: 50%; animation: spin 1s linear infinite; }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>思考の同期</h2>
+      <button type="button" onclick="executeSync()" class="btn" id="syncBtn">要約を開始</button>
+      <div id="spinner" class="spinner"></div>
+      <p id="status">録音ファイルをDriveへ送ります</p>
+    </div>
+
+    <script>
+      function executeSync() {
+        const btn = document.getElementById('syncBtn');
+        const status = document.getElementById('status');
+        const spinner = document.getElementById('spinner');
+
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+        status.innerText = "Geminiが思考を整理中...";
+        spinner.style.display = "block";
+
+        google.script.run
+          .withSuccessHandler(function(msg) {
+            status.innerHTML = "<span style='color: #2e7d32;'>✅ 同期完了！</span>";
+            spinner.style.display = "none";
+            // 2秒後に自動クローズ試行
+            setTimeout(() => { 
+              window.open('about:blank','_self').close(); 
+            }, 2000);
+          })
+          .withFailureHandler(function(err) {
+            status.innerHTML = "<span style='color: #d32f2f;'>❌ エラー: " + err + "</span>";
+            spinner.style.display = "none";
+            btn.disabled = false;
+            btn.style.opacity = "1";
+          })
+          .runProcess(); 
+      }
+    </script>
+  </body>
+</html>
