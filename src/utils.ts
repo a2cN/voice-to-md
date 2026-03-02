@@ -17,6 +17,9 @@ const concateTexts = (files: GoogleAppsScript.Drive.FileIterator): CombinedFiles
   };
 }
 
+/**
+ * 外部API
+ */
 const fetchJson = <T>(url: string, payload: object): FetchResult<T> => {
   const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     ...postOptions,
