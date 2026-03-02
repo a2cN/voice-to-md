@@ -43,3 +43,6 @@ jobs:
 
       - name: Push to Google Apps Script
         run: clasp push --force
+
+      - name: Deploy to Google Apps Script
+        run: clasp deploy -i ${{ secrets.GAS_DEPLOYMENT_ID }} -d "Auto deploy - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"

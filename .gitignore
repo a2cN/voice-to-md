@@ -6,6 +6,7 @@ dist/
 
 # clasp credentials
 .clasprc.json
+creds.json
 
 # OS files
 .DS_Store

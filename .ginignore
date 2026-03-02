@@ -1,9 +1,0 @@
-# Clasp 認証情報 (絶対に含めない)
-.clasprc.json
-
-# プロジェクト設定 (チーム開発なら含める、個人なら含めなくてもOK)
-# .clasp.json
-
-# Node.js 関連
-node_modules/
-dist/
